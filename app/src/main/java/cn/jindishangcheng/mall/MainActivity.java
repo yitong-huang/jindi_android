@@ -1,21 +1,29 @@
 package cn.jindishangcheng.mall;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.jindishangcheng.mall.helpers.BottomNavigationViewHelper;
+import cn.jindishangcheng.mall.helpers.Constant;
 import cn.jindishangcheng.mall.helpers.MainOnNavigationItemSelectedListener;
 import cn.jindishangcheng.mall.helpers.MainOnPageChangeListener;
 import cn.jindishangcheng.mall.helpers.MainPagerAdapter;
@@ -23,7 +31,7 @@ import cn.jindishangcheng.mall.helpers.MainWebviewClient;
 import cn.jindishangcheng.mall.helpers.WebType;
 import cn.jindishangcheng.mall.helpers.WebviewHelper;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements KeyEvent.Callback{
 
     private WebType currentView = WebType.INDEX;
     private WebView indexWebview;
@@ -40,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
             = new MainOnNavigationItemSelectedListener(MainActivity.this);
     private ViewPager.OnPageChangeListener mOnPageChangeListener
             = new MainOnPageChangeListener(MainActivity.this);
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            switch2Page(intent.getIntExtra(Constant.TYPE, 0));
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,16 +97,25 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationViewHelper.disableShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.FILTER);
+        registerReceiver(receiver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 
     public void switch2Page(int index) {
         switch2Page(index, false);
     }
 
-    public void switch2Page(int index, boolean fromViewPage) {
+    public void switch2Page(int index, boolean fromViewPager) {
         currentView = WebType.valueOf(index);
         viewPager.setCurrentItem(index);
-        if (fromViewPage) {
+        if (fromViewPager) {
             navigation.setSelectedItemId(getNavID(WebType.valueOf(index)));
         }
     }
@@ -129,5 +152,22 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return null;
         }
+    }
+
+    private long time = 0;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {//监听返回键，如果可以后退就后退
+            if (System.currentTimeMillis() - time > 2000) {
+                time = System.currentTimeMillis();
+                Toast.makeText(this, "再点击一次退出程序", Toast.LENGTH_SHORT).show();
+            } else {
+                super.onKeyDown(keyCode, event);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    private void exit() {
     }
 }

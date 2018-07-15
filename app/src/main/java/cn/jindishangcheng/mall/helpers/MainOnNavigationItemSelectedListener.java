@@ -30,6 +30,7 @@ public class MainOnNavigationItemSelectedListener implements BottomNavigationVie
                 return true;
             case R.id.navigation_anno:
                 activity.switch2Page(WebType.ANNO.value());
+                activity.getWebview(WebType.ANNO).reload();
                 return true;
             case R.id.navigation_cart:
                 activity.switch2Page(WebType.CART.value());

@@ -7,9 +7,9 @@
     <string name="title_cart">购物车</string>
     <string name="title_user_center">我的</string>
 
-    <string name="url_index">http://120.78.194.248/wap/index.php?show_prog=1</string>
-    <string name="url_duobaos">http://120.78.194.248/wap/index.php?ctl=cate&amp;show_prog=1</string>
-    <string name="url_anno">http://120.78.194.248/wap/index.php?ctl=anno&amp;show_prog=1</string>
-    <string name="url_cart">http://120.78.194.248/wap/index.php?ctl=cart&amp;show_prog=1</string>
-    <string name="url_user_center">http://120.78.194.248/wap/index.php?ctl=user_center&amp;show_prog=1</string>
+    <string name="url_index">http://120.78.194.248/wap/index.php?show_prog=1&amp;is_app=1</string>
+    <string name="url_duobaos">http://120.78.194.248/wap/index.php?ctl=cate&amp;show_prog=1&amp;is_app=1</string>
+    <string name="url_anno">http://120.78.194.248/wap/index.php?ctl=anno&amp;show_prog=1&amp;is_app=1</string>
+    <string name="url_cart">http://120.78.194.248/wap/index.php?ctl=cart&amp;show_prog=1&amp;is_app=1</string>
+    <string name="url_user_center">http://120.78.194.248/wap/index.php?ctl=user_center&amp;show_prog=1&amp;is_app=1</string>
 </resources>
