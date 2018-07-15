@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_index"
+        android:icon="@drawable/tab_index"
+        android:title="@string/title_index" />
+
+    <item
+        android:id="@+id/navigation_cates"
+        android:icon="@drawable/tab_cate"
+        android:title="@string/title_duobaos" />
+
+    <item
+        android:id="@+id/navigation_anno"
+        android:icon="@drawable/tab_anno"
+        android:title="@string/title_anno" />
+
+    <item
+        android:id="@+id/navigation_cart"
+        android:icon="@drawable/tab_cart"
+        android:title="@string/title_cart" />
+
+    <item
+        android:id="@+id/navigation_user_center"
+        android:icon="@drawable/tab_uc"
+        android:title="@string/title_user_center" />
+
+</menu>
