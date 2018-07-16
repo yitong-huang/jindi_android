@@ -168,6 +168,4 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
         }
         return super.onKeyDown(keyCode, event);
     }
-    private void exit() {
-    }
 }
