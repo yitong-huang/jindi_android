@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="cn.jindishangcheng.mall.MainActivity">
 
     <item
         android:id="@+id/navigation_index"
@@ -19,7 +22,7 @@
     <item
         android:id="@+id/navigation_cart"
         android:icon="@drawable/tab_cart"
-        android:title="@string/title_cart" />
+        android:title="@string/title_cart"/>
 
     <item
         android:id="@+id/navigation_user_center"

@@ -4,24 +4,31 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatImageView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.Toast;
+
+import com.allenliu.badgeview.BadgeFactory;
+import com.allenliu.badgeview.BadgeView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jindishangcheng.mall.helpers.ActivityHolder;
 import cn.jindishangcheng.mall.helpers.BottomNavigationViewHelper;
 import cn.jindishangcheng.mall.helpers.Constant;
 import cn.jindishangcheng.mall.helpers.MainOnNavigationItemSelectedListener;
@@ -31,7 +38,9 @@ import cn.jindishangcheng.mall.helpers.MainWebviewClient;
 import cn.jindishangcheng.mall.helpers.WebType;
 import cn.jindishangcheng.mall.helpers.WebviewHelper;
 
-public class MainActivity extends AppCompatActivity implements KeyEvent.Callback{
+public class MainActivity extends AppCompatActivity implements KeyEvent.Callback {
+
+    public static String TAG = "MainActivity";
 
     private WebType currentView = WebType.INDEX;
     private WebView indexWebview;
@@ -42,6 +51,10 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
     private ViewPager viewPager;
     private List<View> viewList;
     private BottomNavigationView navigation;
+    private BadgeView badgeView;
+    private BottomNavigationMenuView menu;
+    private BottomNavigationItemView cartItem;
+    private Button transparentButton;
 
     private WebViewClient mWebviewClient = new MainWebviewClient(MainActivity.this);
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -62,6 +75,20 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
+        navigation = findViewById(R.id.navigation);
+        BottomNavigationViewHelper.disableShiftMode(navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        menu = (BottomNavigationMenuView) navigation.getChildAt(0);
+        cartItem = (BottomNavigationItemView)menu.getChildAt(WebType.CART.value());
+        AppCompatImageView cartIcon = (AppCompatImageView)cartItem.getChildAt(0);
+        transparentButton = findViewById(R.id.button);
+        transparentButton.setWidth(getScreenWidth()*76/100);
+
+        badgeView = BadgeFactory.createCircle(this).setBadgeCount(0).setHeight(15).setWidth(15);
+        badgeView.setBadgeBackground(getResources().getColor(R.color.colorPrimary));
+        //badgeView.bind(transparentButton);
+
         indexWebview = new WebView(this);
         WebviewHelper.initWebview(indexWebview, mWebviewClient);
         indexWebview.loadUrl(getResources().getString(R.string.url_index));
@@ -72,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
 
         annoWebview = new WebView(this);
         WebviewHelper.initWebview(annoWebview, mWebviewClient);
-        annoWebview.loadUrl(getResources().getString(R.string.url_anno));
+        //annoWebview.loadUrl(getResources().getString(R.string.url_anno));
 
         cartWebview = new WebView(this);
         WebviewHelper.initWebview(cartWebview, mWebviewClient);
@@ -93,19 +120,19 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
         viewPager.setCurrentItem(0);
         viewPager.addOnPageChangeListener(mOnPageChangeListener);
 
-        navigation = findViewById(R.id.navigation);
-        BottomNavigationViewHelper.disableShiftMode(navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constant.FILTER);
         registerReceiver(receiver, filter);
+
+        ActivityHolder.getHolder().addActivity(TAG, this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
+
+        ActivityHolder.getHolder().removeActivity(TAG);
     }
 
     public void switch2Page(int index) {
@@ -118,10 +145,13 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
         if (fromViewPager) {
             navigation.setSelectedItemId(getNavID(WebType.valueOf(index)));
         }
+        if (currentView != WebType.ANNO) {
+
+        }
     }
 
     public int getNavID(WebType type) {
-        switch(type) {
+        switch (type) {
             case INDEX:
                 return R.id.navigation_index;
             case CATES:
@@ -167,5 +197,26 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public int getScreenWidth() {
+        WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(dm);
+        return dm.widthPixels;
+    }
+
+    public void setCartNum(final int num) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                badgeView.setBadgeCount(num);
+                if (num > 0) {
+                    badgeView.bind(transparentButton);
+                } else {
+                    badgeView.unbind();
+                }
+            }
+        });
     }
 }

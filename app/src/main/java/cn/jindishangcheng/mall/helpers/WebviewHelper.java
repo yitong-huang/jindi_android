@@ -16,6 +16,7 @@ public class WebviewHelper {
         webView.getSettings().setUseWideViewPort(true);
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setLoadWithOverviewMode(true);
+        webView.addJavascriptInterface(new Js2Java(), "androidShare");
         webView.setWebViewClient(webViewClient);
     }
 
