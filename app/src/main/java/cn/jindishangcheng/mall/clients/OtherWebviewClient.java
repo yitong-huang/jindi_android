@@ -1,10 +1,11 @@
-package cn.jindishangcheng.mall.helpers;
+package cn.jindishangcheng.mall.clients;
 
 import android.app.Activity;
 import android.content.Intent;
 
-import cn.jindishangcheng.mall.MainActivity;
 import cn.jindishangcheng.mall.OtherActivity;
+import cn.jindishangcheng.mall.helpers.Constant;
+import cn.jindishangcheng.mall.helpers.WebType;
 
 /**
  * Created by yitong on 2018/7/16.

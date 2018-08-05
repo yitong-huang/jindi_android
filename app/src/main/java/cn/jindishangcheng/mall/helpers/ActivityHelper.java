@@ -2,22 +2,20 @@ package cn.jindishangcheng.mall.helpers;
 
 import android.app.Activity;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * Created by yitong on 2018/7/26.
  */
 
-public class ActivityHolder {
+public class ActivityHelper {
 
-    private static ActivityHolder holder = new ActivityHolder();
+    private static ActivityHelper holder = new ActivityHelper();
     private static Map<String, Activity> activities = new HashMap<>();
 
 
-    private ActivityHolder() {
+    private ActivityHelper() {
 
     }
 
@@ -40,7 +38,7 @@ public class ActivityHolder {
         }
     }
 
-    public static ActivityHolder getHolder() {
+    public static ActivityHelper getHolder() {
         return holder;
     }
 

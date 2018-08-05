@@ -1,14 +1,11 @@
-package cn.jindishangcheng.mall.helpers;
+package cn.jindishangcheng.mall.clients;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.util.Log;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import cn.jindishangcheng.mall.MainActivity;
 import cn.jindishangcheng.mall.OtherActivity;
+import cn.jindishangcheng.mall.helpers.Constant;
+import cn.jindishangcheng.mall.helpers.WebType;
 
 /**
  * Created by yitong on 2018/7/13.

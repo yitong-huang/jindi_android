@@ -1,4 +1,4 @@
-package cn.jindishangcheng.mall.helpers;
+package cn.jindishangcheng.mall.listeners;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -6,6 +6,7 @@ import android.view.MenuItem;
 
 import cn.jindishangcheng.mall.MainActivity;
 import cn.jindishangcheng.mall.R;
+import cn.jindishangcheng.mall.helpers.WebType;
 
 /**
  * Created by yitong on 2018/7/13.

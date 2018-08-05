@@ -1,6 +1,5 @@
 package cn.jindishangcheng.mall.helpers;
 
-import android.app.Activity;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
@@ -21,7 +20,7 @@ public class Js2Java {
         } catch (Exception e) {
         }
 
-        MainActivity activity = (MainActivity) ActivityHolder.getHolder().getActivity(MainActivity.TAG);
+        MainActivity activity = (MainActivity) ActivityHelper.getHolder().getActivity(MainActivity.TAG);
         if (activity != null) {
             activity.setCartNum(cartNum);
         }

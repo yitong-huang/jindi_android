@@ -1,8 +1,6 @@
-package cn.jindishangcheng.mall.helpers;
+package cn.jindishangcheng.mall.clients;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
@@ -10,8 +8,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import cn.jindishangcheng.mall.MainActivity;
-import cn.jindishangcheng.mall.OtherActivity;
+import cn.jindishangcheng.mall.helpers.Constant;
+import cn.jindishangcheng.mall.helpers.WebType;
 
 /**
  * Created by yitong on 2018/7/16.
@@ -44,6 +42,9 @@ public abstract class BaseWebviewClient extends WebViewClient{
     }
 
     protected void onAlipayUrl(String url) {
+        Log.i(TAG, "ali");
+        openUrlInBrowser(url);
+        /*
         try {
             activity.startActivity(new Intent("android.intent.action.VIEW", Uri.parse(url)));
         } catch (Exception e) {
@@ -57,10 +58,11 @@ public abstract class BaseWebviewClient extends WebViewClient{
                             activity.startActivity(new Intent("android.intent.action.VIEW", alipayUrl));
                         }
                     }).setNegativeButton("取消", null).show();
-        }
+        }*/
     }
 
     private void openUrlInBrowser(String url) {
+        Log.i(TAG, "open browser with url: " + url);
         Intent intent = new Intent();
         intent.setData(Uri.parse(url));
         intent.setAction(Intent.ACTION_VIEW);

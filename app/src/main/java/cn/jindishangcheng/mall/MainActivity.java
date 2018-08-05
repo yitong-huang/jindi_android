@@ -12,7 +12,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -28,13 +27,13 @@ import com.allenliu.badgeview.BadgeView;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.jindishangcheng.mall.helpers.ActivityHolder;
+import cn.jindishangcheng.mall.helpers.ActivityHelper;
 import cn.jindishangcheng.mall.helpers.BottomNavigationViewHelper;
 import cn.jindishangcheng.mall.helpers.Constant;
-import cn.jindishangcheng.mall.helpers.MainOnNavigationItemSelectedListener;
-import cn.jindishangcheng.mall.helpers.MainOnPageChangeListener;
+import cn.jindishangcheng.mall.listeners.MainOnNavigationItemSelectedListener;
+import cn.jindishangcheng.mall.listeners.MainOnPageChangeListener;
 import cn.jindishangcheng.mall.helpers.MainPagerAdapter;
-import cn.jindishangcheng.mall.helpers.MainWebviewClient;
+import cn.jindishangcheng.mall.clients.MainWebviewClient;
 import cn.jindishangcheng.mall.helpers.WebType;
 import cn.jindishangcheng.mall.helpers.WebviewHelper;
 
@@ -99,7 +98,8 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
 
         annoWebview = new WebView(this);
         WebviewHelper.initWebview(annoWebview, mWebviewClient);
-        //annoWebview.loadUrl(getResources().getString(R.string.url_anno));
+        annoWebview.getSettings().setJavaScriptEnabled(false);
+        annoWebview.loadUrl(getResources().getString(R.string.url_anno));
 
         cartWebview = new WebView(this);
         WebviewHelper.initWebview(cartWebview, mWebviewClient);
@@ -124,7 +124,12 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
         filter.addAction(Constant.FILTER);
         registerReceiver(receiver, filter);
 
-        ActivityHolder.getHolder().addActivity(TAG, this);
+        ActivityHelper.getHolder().addActivity(TAG, this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -132,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
         super.onDestroy();
         unregisterReceiver(receiver);
 
-        ActivityHolder.getHolder().removeActivity(TAG);
+        ActivityHelper.getHolder().removeActivity(TAG);
     }
 
     public void switch2Page(int index) {
@@ -140,13 +145,20 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
     }
 
     public void switch2Page(int index, boolean fromViewPager) {
+        WebType toType = WebType.valueOf(index);
+        if (toType == currentView) {
+            return;
+        }
         currentView = WebType.valueOf(index);
         viewPager.setCurrentItem(index);
         if (fromViewPager) {
             navigation.setSelectedItemId(getNavID(WebType.valueOf(index)));
         }
         if (currentView != WebType.ANNO) {
-
+            annoWebview.getSettings().setJavaScriptEnabled(false);
+        } else {
+            annoWebview.getSettings().setJavaScriptEnabled(true);
+            annoWebview.reload();
         }
     }
 
@@ -218,5 +230,9 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
                 }
             }
         });
+    }
+
+    public WebType getCurrentType() {
+        return currentView;
     }
 }

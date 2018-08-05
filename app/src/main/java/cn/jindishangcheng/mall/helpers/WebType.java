@@ -1,6 +1,9 @@
 package cn.jindishangcheng.mall.helpers;
 
+import android.util.Log;
+
 public enum WebType {
+
     INDEX(0), CATES(1), ANNO(2), CART(3), USER_CENTER(4), OUTSIDE(5),
     LOGOUT(6), DOWNLOAD(7), OTHERS(8), ALIPAY(9);
     private int val = 0;
@@ -10,7 +13,6 @@ public enum WebType {
     }
 
     public static WebType url2Type(String url) {
-
         if (url.endsWith("wap/index.php") || url.contains("wap/index.php?show_prog=1")) {
             return INDEX;
         }
@@ -26,7 +28,7 @@ public enum WebType {
         if (url.contains(Constant.VERSION)) {
             return DOWNLOAD;
         }
-        if (url.startsWith("alipays://platformapi")) {
+        if (url.startsWith("alipays://platformapi") || url.contains("qr.alipay.com")) {
             return ALIPAY;
         }
         return OTHERS;

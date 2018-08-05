@@ -1,7 +1,6 @@
-package cn.jindishangcheng.mall.helpers;
+package cn.jindishangcheng.mall.listeners;
 
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
 import cn.jindishangcheng.mall.MainActivity;
 

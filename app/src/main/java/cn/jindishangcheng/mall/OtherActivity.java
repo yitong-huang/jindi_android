@@ -1,6 +1,5 @@
 package cn.jindishangcheng.mall;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -9,7 +8,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import cn.jindishangcheng.mall.helpers.Constant;
-import cn.jindishangcheng.mall.helpers.OtherWebviewClient;
+import cn.jindishangcheng.mall.clients.OtherWebviewClient;
 import cn.jindishangcheng.mall.helpers.WebviewHelper;
 
 public class OtherActivity extends AppCompatActivity implements KeyEvent.Callback{
