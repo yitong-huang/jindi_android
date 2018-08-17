@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "cn.jindishangcheng.mall"
-        minSdkVersion 19
+        minSdkVersion 17
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -28,8 +28,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    compile 'com.allenliu.badgeview:library:1.1.1'
-    compile 'q.rorbin:badgeview:1.1.0'
-    compile "com.android.support:design:27.1.1"
-    compile 'com.android.support:percent:27.1.1'
+    implementation 'com.allenliu.badgeview:library:1.1.1'
+    implementation 'q.rorbin:badgeview:1.1.0'
+    implementation "com.android.support:design:27.1.1"
+    implementation 'com.android.support:percent:27.1.1'
 }

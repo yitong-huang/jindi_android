@@ -151,8 +151,8 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
         }
         currentView = WebType.valueOf(index);
         viewPager.setCurrentItem(index);
-        if (fromViewPager) {
-            navigation.setSelectedItemId(getNavID(WebType.valueOf(index)));
+        navigation.setSelectedItemId(getNavID(WebType.valueOf(index)));
+        if (fromViewPager || index != WebType.ANNO.value()) {
         }
         if (currentView != WebType.ANNO) {
             annoWebview.getSettings().setJavaScriptEnabled(false);

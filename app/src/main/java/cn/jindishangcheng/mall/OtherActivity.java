@@ -7,11 +7,14 @@ import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import cn.jindishangcheng.mall.helpers.ActivityHelper;
 import cn.jindishangcheng.mall.helpers.Constant;
 import cn.jindishangcheng.mall.clients.OtherWebviewClient;
 import cn.jindishangcheng.mall.helpers.WebviewHelper;
 
 public class OtherActivity extends AppCompatActivity implements KeyEvent.Callback{
+
+    public final static String TAG = "OtherActivity";
 
     private WebView webView;
     private MainActivity activity;
@@ -31,6 +34,14 @@ public class OtherActivity extends AppCompatActivity implements KeyEvent.Callbac
         webView = findViewById(R.id.webview_other);
         WebviewHelper.initWebview(webView, mWebviewClient);
         webView.loadUrl(url);
+
+        ActivityHelper.getHolder().addActivity(TAG, this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityHelper.getHolder().removeActivity(TAG);
     }
 
     public WebView getWebView() {
